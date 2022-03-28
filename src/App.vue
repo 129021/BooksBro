@@ -1,13 +1,31 @@
 <template>
+  <router-view />
+
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/" class="tabbar-item">
+      <div class="icon"><i class="iconfont icon-31shouye"></i></div>
+      <div>首页</div>
+    </router-link>
+    <router-link to="/category" class="tabbar-item">
+      <div class="icon"><i class="iconfont icon-fenlei"></i></div>
+      <div>分类</div>
+    </router-link>
+    <router-link to="/shopcart" class="tabbar-item">
+      <div class="icon"><i class="iconfont icon-gouwuche"></i></div>
+      <div>购物车</div></router-link
+    >
+    <router-link to="/profile" class="tabbar-item">
+      <div class="icon"><i class="iconfont icon-yonghu-xianxing"></i></div>
+      <div>我的</div></router-link
+    >
   </nav>
-  <router-view/>
 </template>
 
-<style>
-@import './assets/css/base.css';
+<style >
+@import "./assets/css/base.css";
+
+/* 引入字体文件 */
+@import "./assets/css/iconfont.css";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,15 +35,34 @@
 }
 
 nav {
-  padding: 30px;
+  background-color: #f6f6f6;
+  display: flex;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: var(--color-text);
 }
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+nav .tabbar-item {
+  flex: 1;
+  text-align: center;
+  height: 50px;
+  font-size: var(--font-size);
+}
+.tabbar-item .icon {
+  width: 24px;height: 24px;
+  margin-top: 3px;
+  vertical-align: center;
+  display: inline-block;
 }
 </style>
