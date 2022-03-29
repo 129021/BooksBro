@@ -50,6 +50,7 @@ export default {
   width: 100%;
   position: sticky;
   top:45px;
+  z-index: 10;
 }
 .tab-control .tab-control-item {
   flex: 1;

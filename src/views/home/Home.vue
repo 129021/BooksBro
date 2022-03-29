@@ -15,6 +15,8 @@
       @tabClick="tabClick"
     ></tab-control>
 
+    <GoodsList></GoodsList>
+
   </div>
 </template>
 
@@ -25,12 +27,15 @@ import TabControl from "components/content/tabControl/TabControl";
 
 import { getHomeAllData } from "network/home";
 import { onMounted, ref, reactive } from "vue";
+import GoodsList from 'components/content/goods/GoodsList'
 export default {
   name: "Home",
   components: {
     NavBar,
     Recommend,
     TabControl,
+    GoodsList,
+
   },
 
   setup() {
