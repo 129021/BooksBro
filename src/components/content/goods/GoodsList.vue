@@ -1,16 +1,7 @@
 <template>
   <div class="goods">
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
-      <GoodsListItem></GoodsListItem>
+      <GoodsListItem v-for="(item,index) in goods" :key="item.id" :product="item"></GoodsListItem>
+ 
   </div>
 </template>
 
@@ -18,6 +9,14 @@
 import GoodsListItem from './GoodsListItem.vue'
 export default {
     name:'GoodsList',
+    props:{
+goods:{
+    type:Array,
+    default(){
+        return []
+    }
+}
+    },
     components:{
         GoodsListItem,
     }
