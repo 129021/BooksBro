@@ -1,5 +1,13 @@
 <template>
-  <router-view />
+  <!-- <router-view /> -->
+
+  <router-view v-slot="{ Component }">
+    <transition>
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </transition>
+  </router-view>
 
   <nav>
     <router-link to="/" class="tabbar-item">
@@ -11,7 +19,11 @@
       <div>分类</div>
     </router-link>
     <router-link to="/shopcart" class="tabbar-item">
-      <div class="icon"><i class="iconfont icon-gouwuche"></i></div>
+      <div class="icon">
+        <van-badge :content="0" max="9">
+          <i class="iconfont icon-gouwuche"></i>
+        </van-badge>
+      </div>
       <div>购物车</div></router-link
     >
     <router-link to="/profile" class="tabbar-item">
@@ -41,7 +53,6 @@ nav {
   left: 0;
   right: 0;
   bottom: 0;
-
 }
 
 nav a {
@@ -60,7 +71,8 @@ nav .tabbar-item {
   font-size: var(--font-size);
 }
 .tabbar-item .icon {
-  width: 24px;height: 24px;
+  width: 24px;
+  height: 24px;
   margin-top: 3px;
   vertical-align: center;
   display: inline-block;

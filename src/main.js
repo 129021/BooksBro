@@ -1,6 +1,21 @@
-import { createApp } from 'vue'
+import {
+    createApp
+} from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
-createApp(App).use(store).use(router).mount('#app')
+import 'vant/lib/index.css'
+
+// 导入轮播图插件（从vant）
+import {
+    Swipe,
+    SwipeItem,
+    Lazyload,
+    Badge,
+} from 'vant';
+
+
+createApp(App).use(Swipe).use(SwipeItem).use(Lazyload, {
+    loading: require('./assets/images/default.png')
+}).use(Badge).use(store).use(router).mount('#app')
