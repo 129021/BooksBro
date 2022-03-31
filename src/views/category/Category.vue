@@ -42,22 +42,31 @@
           :lazy-load="true"
           v-for="item in showGoods"
           :key="item.id"
+          @click="itemClick(item.id)"
         />
       </div>
     </div>
+
+    <back-top v-show="isTabFixed" @bTop="bTop"></back-top>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed, watchEffect, nextTick } from "vue";
 
 import { getCategory, getCategoryGoods } from "network/category.js";
 
+import BScroll from "better-scroll";
+
+import BackTop from "components/common/backtop/BackTop";
+
+import { useRouter } from "vue-router";
 export default {
   name: "Category",
   components: {
     NavBar,
+    BackTop,
   },
 
   setup() {
@@ -68,6 +77,13 @@ export default {
     let currentId = ref(0);
 
     let currentOrder = ref("sales");
+
+    let bs = reactive({});
+
+    // 显示返回按钮的变量
+    let isTabFixed = ref(false);
+
+    const router = useRouter();
 
     const goods = reactive({
       sales: { page: 1, list: [] },
@@ -104,6 +120,41 @@ export default {
       });
 
       init();
+
+      bs = new BScroll(document.querySelector(".goodslist"), {
+        probeType: 3, //0,1,2,3只要在运动就触发scroll事件
+        click: true,
+        pullUpLoad: true, //上拉加载更多
+      });
+
+      // 注册滚动事件
+      bs.on("scroll", (position) => {
+        // console.log('banner+recommend的高度是：'+banref.value.offsetHeight);
+        // console.log(position.y);
+
+        // isTabFixed.value,一定不能忘了value
+        isTabFixed.value = -position.y > 300;
+      });
+
+      // 上拉加载更多
+      bs.on("pullingUp", () => {
+        console.log("上拉加载更多...");
+
+        const page = goods[currentOrder.value].page + 1;
+
+        getCategoryGoods(currentOrder.value, currentId.value).then((res) => {
+          // console.log(res);
+          goods[currentOrder.value].list.push(...res.data.goods.data);
+          goods[currentOrder.value].page += 1;
+
+          bs && bs.refresh();
+        });
+        // console.log(document.querySelector("content").clientHeight);
+
+        // 完成上拉，等数据请求完成，要将数据展示出来
+        bs.finishPullUp();
+        bs.refresh();
+      });
     });
 
     // 排序选项卡
@@ -115,6 +166,8 @@ export default {
       getCategoryGoods(currentOrder.value, currentId.value).then((res) => {
         // console.log(res);
         goods[currentOrder.value].list = res.data.goods.data;
+
+        bs && bs.refresh();
       });
     };
 
@@ -123,12 +176,30 @@ export default {
     const getGoods = (cid) => {
       currentId.value = cid;
       // console.log(cid);
-      console.log(currentId.value);     
+      console.log(currentId.value);
       // init();
       getCategoryGoods(currentOrder.value, currentId.value).then((res) => {
         // console.log(res);
         goods[currentOrder.value].list = res.data.goods.data;
       });
+
+      bs && bs.refresh();
+    };
+
+    // 监听：任何一个变量有变化
+    watchEffect(() => {
+      nextTick(() => {
+        // 重新计算高度
+        bs && bs.refresh();
+      });
+    });
+
+    const bTop = () => {
+      // console.log('click to top');
+      bs.scrollTo(0, 0, 500);
+    };
+    const itemClick = (id) => {
+      router.push({ path: "/detail", query: { id } });
     };
 
     return {
@@ -143,6 +214,10 @@ export default {
       goods,
       showGoods,
       init,
+      bs,
+      isTabFixed,
+      bTop,
+      itemClick,
     };
   },
 };
@@ -161,6 +236,7 @@ export default {
   top: 45px;
   left: 130px;
   right: 0;
+  z-index: 1000;
 }
 
 .leftmenu {
