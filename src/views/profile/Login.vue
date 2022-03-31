@@ -1,6 +1,6 @@
 <template>
   <nav-bar>
-    <template v-slot:default> 新用户注册 </template>
+    <template v-slot:default> 用户登录 </template>
   </nav-bar>
 
   <div style="margin-top: 50px">
@@ -17,11 +17,11 @@
     <van-form @submit="onSubmit">
       <van-cell-group inset>
         <van-field
-          v-model="name"
-          name="用户名"
-          label="用户名"
-          placeholder="用户名"
-          :rules="[{ required: true, message: '请填写用户名' }]"
+          v-model="email"
+          name="邮箱"
+          label="邮箱"
+          placeholder="邮箱"
+          :rules="[{ required: true, message: '请输入邮箱' }]"
         />
         <van-field
           v-model="password"
@@ -31,26 +31,10 @@
           placeholder="密码"
           :rules="[{ required: true, message: '请填写密码' }]"
         />
-        <van-field
-          v-model="password_confirmation"
-          type="password"
-          name="确认密码"
-          label="确认密码"
-          placeholder="确认密码"
-          :rules="[{ required: true, message: '请再次输入密码' }]"
-        />
-
-        <van-field
-          v-model="email"
-          name="电子邮箱"
-          label="电子邮箱"
-          placeholder="请输入正确的电子邮箱"
-          :rules="[{ required: true, message: '请输入正确的电子邮箱' }]"
-        />
       </van-cell-group>
       <div style="margin: 16px">
-        <div class="link-login" @click="$router.push({path:'/login'})" >
-          已有账号，立即登录
+        <div class="link-login" @click="$router.push({ path: '/register' })">
+          没有账号，立即注册
         </div>
         <van-button round block type="primary" native-type="submit">
           提交
@@ -63,51 +47,36 @@
 <script>
 import NavBar from "components/common/navbar/NavBar";
 import { ref, toRefs, reactive } from "vue";
-import { register } from "network/user";
+import { login } from "network/user";
 import { Notify, Toast } from "vant";
 import { useRouter } from "vue-router";
 export default {
-  name: "Register",
+  name: "Login",
   components: {
     NavBar,
   },
 
   setup() {
     let userinfo = reactive({
-      name: "",
-      password: "",
-      password_confirmation: "",
       email: "",
+      password: "",
     });
 
     const router = useRouter();
 
     const onSubmit = () => {
-      //   console.log("click the submit button");
-      // 先验证
-      if (userinfo.password != userinfo.password_confirmation) {
-        Notify("两次密码不一致");
-      } else {
-        // 后提交
-        register(userinfo).then((res) => {
-          //    console.log(res);
-          if (res.status == "201") {
-            Toast.success("注册成功！");
+      login(userinfo).then((res) => {
+        // 如果成功，将token保存在本地window.localStorage
+        window.localStorage.setItem("token", res.access_token);
 
-            setTimeout(() => {
-              router.push({ path: "/login" });
-            }, 1000);
-          }
+        Toast.success("登录成功");
+        userinfo.email = "";
+        userinfo.password = "";
 
-          //   注册账号：
-          // spongebob
-          // 111111
-          // 17865565265@163.com
-
-          userinfo.password = "";
-          userinfo.password_confirmation = "";
-        });
-      }
+        setTimeout(() => {
+          router.go(-1);
+        }, 500);
+      });
     };
 
     return {

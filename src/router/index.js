@@ -13,6 +13,7 @@ const Detail = () => import('../views/detail/Detail');
 const Profile = () => import('../views/profile/Profile');
 const Shopcart = () => import('../views/shopcart/Shopcart');
 const Register = () => import('../views/profile/Register');
+const Login = () => import('../views/profile/Login');
 
 
 const routes = [{
@@ -68,9 +69,18 @@ const routes = [{
   {
     path: '/register',
     name: 'Register',
-    component:Register ,
+    component: Register,
     meta: {
       title: '注册'
+    }
+  },
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '登录'
     }
   },
 
