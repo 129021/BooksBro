@@ -1,6 +1,8 @@
 const {
   defineConfig
 } = require('@vue/cli-service')
+
+
 module.exports = defineConfig({
   transpileDependencies: true,
 
@@ -12,9 +14,11 @@ module.exports = defineConfig({
         'router': '@/router',
         'store': '@/store',
         'views': '@/views',
-        'network':'@/network',
+        'network': '@/network',
       }
-    }
+    },
+
+
   },
 
   publicPath: './',

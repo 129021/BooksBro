@@ -1,13 +1,17 @@
 <template>
-  <!-- <router-view /> -->
+  <router-view />
 
-  <router-view v-slot="{ Component }">
+
+<!-- <keep-alive> -->
+
+
+  <!-- <router-view v-slot="{ Component }">
     <transition>
       <keep-alive>
         <component :is="Component" />
       </keep-alive>
     </transition>
-  </router-view>
+  </router-view> -->
 
   <nav>
     <router-link to="/" class="tabbar-item">
@@ -33,8 +37,9 @@
   </nav>
 </template>
 
-<style >
+<style  >
 @import "./assets/css/base.css";
+
 
 /* 引入字体文件 */
 @import "./assets/css/iconfont.css";
