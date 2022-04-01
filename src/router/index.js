@@ -1,11 +1,17 @@
 // import {
 //   nextTick
 // } from 'vue';
+// import store from '@/store';
 import {
   createRouter,
   createWebHashHistory
 } from 'vue-router'
-// import Home from '../views/Home.vue'
+
+import {
+  Notify
+} from 'vant';
+
+import store from '../store';
 
 const Home = () => import('../views/home/Home');
 const Category = () => import('../views/category/Category');
@@ -54,7 +60,8 @@ const routes = [{
     name: 'Profile',
     component: Profile,
     meta: {
-      title: '个人中心'
+      title: '个人中心',
+      isAuthRequired: true
     }
   },
   {
@@ -62,8 +69,11 @@ const routes = [{
     name: 'Shopcart',
     component: Shopcart,
     meta: {
-      title: '购物车'
-    }
+      title: '购物车',
+      isAuthRequired: true
+    },
+
+
   },
 
   {
@@ -98,7 +108,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 
   // 如果没有登录，到login
-  next();
+  if (to.meta.isAuthRequired && store.state.user.isLogin == false) {
+    Notify('您还没有登录，请先登录')
+    return next('/login')
+  } else {
+    next();
+  }
+  // next()
+
   document.title = to.meta.title;
 })
 

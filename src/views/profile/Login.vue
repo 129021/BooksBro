@@ -50,6 +50,7 @@ import { ref, toRefs, reactive } from "vue";
 import { login } from "network/user";
 import { Notify, Toast } from "vant";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
   name: "Login",
   components: {
@@ -64,10 +65,15 @@ export default {
 
     const router = useRouter();
 
+    const store = useStore();
+
     const onSubmit = () => {
       login(userinfo).then((res) => {
+        // console.log(res);
         // 如果成功，将token保存在本地window.localStorage
-        window.localStorage.setItem("token", res.access_token);
+        window.localStorage.setItem("token", res.data.access_token);
+
+        store.commit('setIsLogin',true)
 
         Toast.success("登录成功");
         userinfo.email = "";

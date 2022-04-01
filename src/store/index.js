@@ -1,14 +1,22 @@
-import { createStore } from 'vuex'
+import {
+  createStore
+} from 'vuex'
 
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
+import mutations from './mutations';
+import actions from './actions';
+import getters from './getters';
+
+
+const state = {
+  user: {
+    isLogin: window.localStorage.getItem('token') ? true : false,
   }
+}
+
+
+export default createStore({ 
+  state,
+  getters,
+  mutations,
+  actions,
 })
