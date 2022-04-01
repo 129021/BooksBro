@@ -1,9 +1,7 @@
 <template>
   <router-view />
 
-
-<!-- <keep-alive> -->
-
+  <!-- <keep-alive> -->
 
   <!-- <router-view v-slot="{ Component }">
     <transition>
@@ -24,7 +22,7 @@
     </router-link>
     <router-link to="/shopcart" class="tabbar-item">
       <div class="icon">
-        <van-badge :content="0" max="9">
+        <van-badge :content="$store.state.cartCount" max="99">
           <i class="iconfont icon-gouwuche"></i>
         </van-badge>
       </div>
@@ -37,9 +35,22 @@
   </nav>
 </template>
 
+
+<script>
+import { onMounted } from "vue";
+import { useStore } from "vuex";
+export default {
+  setup() {
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch("updateCart");
+    });
+  },
+};
+</script>
+
 <style  >
 @import "./assets/css/base.css";
-
 
 /* 引入字体文件 */
 @import "./assets/css/iconfont.css";

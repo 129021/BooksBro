@@ -20,6 +20,9 @@ const Profile = () => import('../views/profile/Profile');
 const Shopcart = () => import('../views/shopcart/Shopcart');
 const Register = () => import('../views/profile/Register');
 const Login = () => import('../views/profile/Login');
+const Address = () => import('../views/profile/Address');
+const AddressEdit = () => import('../views/profile/AddressEdit');
+const  CreateOrder = () => import('../views/order/CreateOrder.vue');
 
 
 const routes = [{
@@ -93,6 +96,37 @@ const routes = [{
       title: '登录'
     }
   },
+
+
+  {
+    path: '/address',
+    name: 'Address',
+    component: Address,
+    meta: {
+      title: '地址管理',
+      isAuthRequired: true
+    }
+  },
+
+  {
+    path: '/addressedit',
+    name: 'AddressEdit',
+    component: AddressEdit,
+    meta: {
+      title: '地址编辑',
+      isAuthRequired: true
+    }
+  },
+  {
+    path: '/createorder',
+    name: 'CreateOrder',
+    component: CreateOrder,
+    meta: {
+      title: '订单预览',
+      isAuthRequired: true
+    }
+  },
+
 
 
 

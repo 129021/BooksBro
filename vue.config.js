@@ -15,6 +15,7 @@ module.exports = defineConfig({
         'store': '@/store',
         'views': '@/views',
         'network': '@/network',
+        'utils':'@/utils',
       }
     },
 
