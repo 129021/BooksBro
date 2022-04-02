@@ -99,7 +99,7 @@ export default {
     const goToCart = () => {
       // console.log('buy right now');
       addCart({ goods_id: book.detail.id, num: 1 }).then((res) => {
-        // console.log(res);
+        console.log(res);
         if (res.status == "201" || res.status == "204") {
           Toast.success("成功加入到购物车");
           store.dispatch("updateCart");

@@ -24,6 +24,7 @@ const Address = () => import('../views/profile/Address');
 const AddressEdit = () => import('../views/profile/AddressEdit');
 const  CreateOrder = () => import('../views/order/CreateOrder.vue');
 const  OrderDetail = () => import('../views/order/OrderDetail.vue');
+const  Order = () => import('../views/order/Order.vue');
 
 
 const routes = [{
@@ -133,6 +134,16 @@ const routes = [{
     component: OrderDetail,
     meta: {
       title: '订单详情',
+      isAuthRequired: true
+    }
+  },
+
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order,
+    meta: {
+      title: '订单列表',
       isAuthRequired: true
     }
   },

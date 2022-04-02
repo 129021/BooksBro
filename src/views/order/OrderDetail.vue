@@ -56,6 +56,8 @@
       v-model:show="showPay"
       position="bottom"
       :style="{ height: '40%' }"
+      @close="closeQRcode"
+      closeable
     >
       <div :style="{ width: '90%', margin: '0 auto', padding: '50px 0' }">
         <van-grid :border="false" :column-num="2">
@@ -112,7 +114,7 @@ export default {
       state.orderNo = id;
 
       getOrderDetail(id).then((res) => {
-        console.log(res);
+        // console.log(res);
         state.detail = res.data;
       });
     };
@@ -151,7 +153,8 @@ export default {
       // 轮询查看
       const timer = setInterval(() => {
         getPayStatus(state.orderNo).then((res) => {
-          console.log(res);
+          // console.log(res);
+          // res.data=2;
           if (res.data == "2") {
             clearInterval(timer);
             state.showPay = false;
@@ -178,6 +181,10 @@ export default {
       Dialog.close();
     };
 
+    const closeQRcode = () => {
+      state.detail.status = 2;
+    };
+
     return {
       ...toRefs(state),
       statusString,
@@ -185,6 +192,7 @@ export default {
       showPayFn,
       handleConfirmOrder,
       close,
+      closeQRcode,
     };
   },
 };
