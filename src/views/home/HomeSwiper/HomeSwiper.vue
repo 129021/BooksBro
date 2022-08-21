@@ -6,7 +6,7 @@
     indicator-color="white"
   >
     <van-swipe-item v-for="(item, index) in banners" :key="index">
-      <img v-lazy="item.img_url" alt="" />
+      <img class="bannerImg" v-lazy="item.img_url" alt="" />
     </van-swipe-item>
   </van-swipe>
 </template>
@@ -32,8 +32,8 @@ export default {
   background-color: #39a9ed;
 } */
 
-img {
+.bannerImg {
   width: 100%;
-  height: auto;
+  height: 150px;
 }
 </style>

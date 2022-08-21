@@ -11,7 +11,7 @@
           <div class="user-desc">
             <span>昵称：{{ user.name }}</span>
             <span>登录名：{{ user.email }}</span>
-            <span class="name">个性签名：成就自己的只需一套精品</span>
+            <span class="name">个性签名:我的Vue3图书商城项目</span>
           </div>
         </div>
       </div>
