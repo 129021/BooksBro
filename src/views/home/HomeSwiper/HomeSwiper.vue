@@ -32,6 +32,8 @@ export default {
   background-color: #39a9ed;
 } */
 
+
+/* test */
 .bannerImg {
   width: 100%;
   height: 150px;
